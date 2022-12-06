@@ -142,8 +142,13 @@ void APP_Tasks ( void )
         case APP_STATE_INIT:
         {
             bool appInitialized = true;
-       
-        
+            
+            DRV_TMR1_Start();
+            DRV_OC0_Enable();
+            
+            DRV_TMR2_Start();
+            DRV_OC1_Enable();
+            
             if (appInitialized)
             {
             

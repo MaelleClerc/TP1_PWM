@@ -170,7 +170,8 @@
       <Template dnOrder="0">
         <Name dnOrder="0">drv_oc_static.c</Name>
         <Path dnOrder="1">Source&amp;#160;Files/app/system_config/default/framework/driver/oc/src</Path>
-        <Checksum dnOrder="2">05F11D0FA55DFB5AAB69885FF789B0B6</Checksum>
+        <Checksum dnOrder="2">CBFDD47F9DFDF0BA018FDCE11BF3E369</Checksum>
+        <ProjectFileChecksum dnOrder="3">FE162A3B56D71B7DC751DB4292DD1A5D</ProjectFileChecksum>
       </Template>
       <Template dnOrder="1">
         <Name dnOrder="0">sys_ports_static.c</Name>
