@@ -134,6 +134,16 @@ void APP_Initialize ( void )
 
 void APP_Tasks ( void )
 {
+    /* Local variables */
+    static uint8_t Led_Counter;
+    static uint8_t Leds_Address[8] =    {BSP_LED_0, 
+                                        BSP_LED_1, 
+                                        BSP_LED_2, 
+                                        BSP_LED_3, 
+                                        BSP_LED_4, 
+                                        BSP_LED_5, 
+                                        BSP_LED_6, 
+                                        BSP_LED_7};
 
     /* Check the application's current state. */
     switch ( appData.state )
@@ -142,23 +152,48 @@ void APP_Tasks ( void )
         case APP_STATE_INIT:
         {
             bool appInitialized = true;
+            
+            // Initialisation du LCD
+            lcd_init();
+            
+            // Affichage sur le LCD des lignes de base
+            printf_lcd("Tp1 PWM 2022-2023");
+            lcd_gotoxy(1, 2);
+            printf_lcd("Maelle Clerc");
+            lcd_gotoxy(1, 3);
+            printf_lcd("Miguel Santos");
+            lcd_bl_on();
+       
+            // Initialisation de l'ADC
+            BSP_InitADC10();
+            
+            // Allumer toutes les Leds
+            for (Led_Counter = 0; Led_Counter < 8; Led_Counter++)
+            {
+                BSP_LEDOff(Leds_Address[Led_Counter]); 
+            }
        
         
             if (appInitialized)
             {
             
-                appData.state = APP_STATE_SERVICE_TASKS;
+                appData.state = APP_STATE_WAIT;
             }
             break;
         }
 
         case APP_STATE_SERVICE_TASKS:
         {
-        
+            appData.state = APP_STATE_WAIT;
+            
             break;
         }
 
-        /* TODO: implement your application state machine.*/
+        case APP_STATE_WAIT:
+        {
+        
+            break;
+        }
         
 
         /* The default state should never be executed. */

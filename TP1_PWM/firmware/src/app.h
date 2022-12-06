@@ -58,6 +58,10 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include <stdlib.h>
 #include "system_config.h"
 #include "system_definitions.h"
+#include "Mc32DriverAdc.h"
+#include "Mc32DriverLcd.h"
+#include "bsp.h"
+#include "GestPWM.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -89,6 +93,7 @@ typedef enum
 	/* Application's state machine's initial state. */
 	APP_STATE_INIT=0,
 	APP_STATE_SERVICE_TASKS,
+    APP_STATE_WAIT = 1,
 
 	/* TODO: Define states used by the application state machine. */
 
@@ -198,6 +203,34 @@ void APP_Initialize ( void );
 
 void APP_Tasks( void );
 
+/*******************************************************************************
+  Function:
+    void APP_UpdateState ( APP_STATES NewState )
+
+  Description:
+    This routine update the current state to the new one for the
+    state machine
+
+  Precondition:
+    The system and application initialization ("SYS_Initialize") should be
+    called before calling this.
+
+  Parameters:
+    The new state in the structure
+
+  Returns:
+    None.
+
+  Example:
+    <code>
+    APP_Tasks();
+    </code>
+
+  Remarks:
+    This routine must be called from SYS_Tasks() routine.
+ */
+
+void APP_UpdateState (APP_STATES NewState);
 
 #endif /* _APP_H */
 
