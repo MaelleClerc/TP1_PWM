@@ -60,6 +60,52 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVOCES, OR ANY CLAIMS BY THIRD PARTIES
 void DRV_OC0_Initialize(void)
 {
     /* Setup OC0 Instance */
+    PLIB_OC_ModeSelect(OC_ID_2, OC_COMPARE_PWM_MODE_WITHOUT_FAULT_PROTECTION);
+    PLIB_OC_BufferSizeSelect(OC_ID_2, OC_BUFFER_SIZE_16BIT);
+    PLIB_OC_TimerSelect(OC_ID_2, OC_TIMER_16BIT_TMR2);
+    PLIB_OC_Buffer16BitSet(OC_ID_2, 0);
+    PLIB_OC_PulseWidth16BitSet(OC_ID_2, 10);
+}
+
+void DRV_OC0_Enable(void)
+{
+   PLIB_OC_Enable(OC_ID_2);
+}
+
+void DRV_OC0_Disable(void)
+{
+   PLIB_OC_Disable(OC_ID_2);
+}
+
+void DRV_OC0_Start(void)
+{
+   PLIB_OC_Enable(OC_ID_2);
+}
+
+void DRV_OC0_Stop(void)
+{
+   PLIB_OC_Disable(OC_ID_2);
+}
+
+void DRV_OC0_PulseWidthSet(uint32_t pulseWidth)
+{
+    /* Updating pulse width for 16 bit mode */
+    PLIB_OC_PulseWidth16BitSet(OC_ID_2, (uint16_t)pulseWidth);
+}
+
+bool DRV_OC0_FaultHasOccurred(void)
+{
+   return PLIB_OC_FaultHasOccurred(OC_ID_2);
+}
+
+// *****************************************************************************
+// *****************************************************************************
+// Section: Instance 1 static driver functions
+// *****************************************************************************
+// *****************************************************************************
+void DRV_OC1_Initialize(void)
+{
+    /* Setup OC0 Instance */
     PLIB_OC_ModeSelect(OC_ID_3, OC_COMPARE_PWM_MODE_WITHOUT_FAULT_PROTECTION);
     PLIB_OC_BufferSizeSelect(OC_ID_3, OC_BUFFER_SIZE_16BIT);
     PLIB_OC_TimerSelect(OC_ID_3, OC_TIMER_16BIT_TMR3);
@@ -67,33 +113,33 @@ void DRV_OC0_Initialize(void)
     PLIB_OC_PulseWidth16BitSet(OC_ID_3, 10);
 }
 
-void DRV_OC0_Enable(void)
+void DRV_OC1_Enable(void)
 {
    PLIB_OC_Enable(OC_ID_3);
 }
 
-void DRV_OC0_Disable(void)
+void DRV_OC1_Disable(void)
 {
    PLIB_OC_Disable(OC_ID_3);
 }
 
-void DRV_OC0_Start(void)
+void DRV_OC1_Start(void)
 {
    PLIB_OC_Enable(OC_ID_3);
 }
 
-void DRV_OC0_Stop(void)
+void DRV_OC1_Stop(void)
 {
    PLIB_OC_Disable(OC_ID_3);
 }
 
-void DRV_OC0_PulseWidthSet(uint32_t pulseWidth)
+void DRV_OC1_PulseWidthSet(uint32_t pulseWidth)
 {
     /* Updating pulse width for 16 bit mode */
     PLIB_OC_PulseWidth16BitSet(OC_ID_3, (uint16_t)pulseWidth);
 }
 
-bool DRV_OC0_FaultHasOccurred(void)
+bool DRV_OC1_FaultHasOccurred(void)
 {
    return PLIB_OC_FaultHasOccurred(OC_ID_3);
 }
