@@ -16,6 +16,7 @@
 
 #include "GestPWM.h"
 #include "bsp.h"
+#include "driver/oc/drv_oc_static.h"
 
 S_pwmSettings PWMData;      // pour les settings
 
@@ -26,11 +27,13 @@ void GPWM_Initialize(S_pwmSettings *pData)
    // Init état du pont en H
     BSP_EnableHbrige();
     
-   // lance les timers et OC
+   // Lance les timers et OC
     DRV_TMR0_Start();
     DRV_TMR1_Start();
     DRV_TMR2_Start();
     DRV_TMR3_Start();
+    DRV_OC0_Start();
+    DRV_OC1_Start();
     
 }
 
@@ -72,10 +75,10 @@ void GPWM_GetSettings(S_pwmSettings *pData)
     Average_Chan1 = Average_Chan1 / 10;
     
     // Conversion des valeurs
-    Convert_Speed = Average_Chan0 / 5.166;
+    Convert_Speed = Average_Chan0 / 5.166;          // 5.166 = 1023 / 198
     PWMData.SpeedSetting = Convert_Speed - 99;
     PWMData.absSpeed = abs(PWMData.SpeedSetting);
-    PWMData.AngleSetting = Average_Chan1 / 5.683;
+    PWMData.AngleSetting = Average_Chan1 / 5.683;   // 5.683 = 1023 / 180
     PWMData.absAngle = abs(PWMData.AngleSetting);
 }
 
@@ -96,12 +99,34 @@ void GPWM_DispSettings(S_pwmSettings *pData)
 // Execution PWM et gestion moteur à partir des info dans structure
 void GPWM_ExecPWM(S_pwmSettings *pData)
 {
+    // Gestion du sens de direction du pont en H
+    if(PWMData.SpeedSetting > 0)
+    {
+        AIN1_HBRIDGE_BIT = 1;
+        AIN2_HBRIDGE_BIT = 0;
+        STBY_HBRIDGE_BIT = 1;
+    }
+    else if(PWMData.SpeedSetting == 0)
+    {
+        STBY_HBRIDGE_BIT = 0;
+    }
+    else
+    {
+        AIN1_HBRIDGE_BIT = 0;
+        AIN2_HBRIDGE_BIT = 1;
+        STBY_HBRIDGE_BIT = 1;
+    }
     
+    // Calcul du nombre d'impulsions sur OC2
+    PLIB_OC_PulseWidth16BitSet(OC_ID_2, PWMData.absSpeed * 20.19);          // 20.19 = 1999 / 99
+    
+    // Calcul du nombre d'impulsions sur OC3
+    PLIB_OC_PulseWidth16BitSet(OC_ID_3, PWMData.absAngle * 58.33 + 2999);   // 58.33 = (13499 - 2999) / 180
 }
 
 // Execution PWM software
 void GPWM_ExecPWMSoft(S_pwmSettings *pData)
-{
+{ 
     
 }
 
