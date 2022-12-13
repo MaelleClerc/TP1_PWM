@@ -140,26 +140,22 @@ void APP_Tasks ( void )
     {
         /* Application's initial state. */
         case APP_STATE_INIT:
-        {
-            bool appInitialized = true;
-            
+        {   
+            DRV_TMR0_Start();        
             DRV_TMR1_Start();
-            DRV_OC0_Enable();
-            
             DRV_TMR2_Start();
-            DRV_OC1_Enable();
+            DRV_TMR3_Start();
             
-            if (appInitialized)
-            {
+            DRV_OC0_Start();
+            DRV_OC1_Start();
             
-                appData.state = APP_STATE_SERVICE_TASKS;
-            }
+            appData.state = APP_STATE_SERVICE_TASKS;
+            
             break;
         }
 
         case APP_STATE_SERVICE_TASKS:
         {
-        
             break;
         }
 
