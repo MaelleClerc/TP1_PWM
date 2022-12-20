@@ -4,8 +4,13 @@
     <memory name="program">                 
       <units>bytes</units>                 
       <length>531968</length>                 
+<<<<<<< HEAD
       <used>28276</used>                     
       <free>503692</free>                     
+=======
+      <used>28264</used>                     
+      <free>503704</free>                     
+>>>>>>> e041d3d0a7a93abeffeac4ae08b5af6a12995cb7
     </memory>                              
     <memory name="data">              
       <units>bytes</units>                 
