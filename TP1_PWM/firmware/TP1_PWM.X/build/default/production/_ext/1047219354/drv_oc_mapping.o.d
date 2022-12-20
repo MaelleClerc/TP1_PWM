@@ -145,7 +145,8 @@ build/default/production/_ext/1047219354/drv_oc_mapping.o: \
  ../../../../../../../framework/driver/tmr/drv_tmr_compatibility.h \
  ../../../../../../../framework/system/ports/sys_ports.h \
  ../../../../../../../framework/system/ports/sys_ports_definitions.h \
- ../src/app.h
+ ../src/app.h ../../../../../../../bsp/pic32mx_skes/Mc32DriverAdc.h \
+ ../../../../../../../bsp/pic32mx_skes/Mc32DriverLcd.h ../src/GestPWM.h
 
 ../src/system_config/default/system_config.h:
 
@@ -438,3 +439,9 @@ build/default/production/_ext/1047219354/drv_oc_mapping.o: \
 ../../../../../../../framework/system/ports/sys_ports_definitions.h:
 
 ../src/app.h:
+
+../../../../../../../bsp/pic32mx_skes/Mc32DriverAdc.h:
+
+../../../../../../../bsp/pic32mx_skes/Mc32DriverLcd.h:
+
+../src/GestPWM.h:

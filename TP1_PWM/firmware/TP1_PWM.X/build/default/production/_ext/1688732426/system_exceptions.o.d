@@ -147,6 +147,8 @@ build/default/production/_ext/1688732426/system_exceptions.o: \
  ../../../../../../../framework/system/ports/sys_ports.h \
  ../../../../../../../framework/system/ports/sys_ports_definitions.h \
  ../src/app.h ../src/system_config/default/system_definitions.h \
+ ../../../../../../../bsp/pic32mx_skes/Mc32DriverAdc.h \
+ ../../../../../../../bsp/pic32mx_skes/Mc32DriverLcd.h ../src/GestPWM.h \
  ../../../../../../../framework/system/debug/sys_debug.h
 
 ../src/system_config/default/system_config.h:
@@ -444,5 +446,11 @@ build/default/production/_ext/1688732426/system_exceptions.o: \
 ../src/app.h:
 
 ../src/system_config/default/system_definitions.h:
+
+../../../../../../../bsp/pic32mx_skes/Mc32DriverAdc.h:
+
+../../../../../../../bsp/pic32mx_skes/Mc32DriverLcd.h:
+
+../src/GestPWM.h:
 
 ../../../../../../../framework/system/debug/sys_debug.h:
