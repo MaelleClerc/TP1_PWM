@@ -135,15 +135,16 @@ void APP_Initialize ( void )
 void APP_Tasks ( void )
 {
     /* Local variables */
-    static uint8_t Led_Counter;
-    static uint8_t Leds_Address[8] =    {BSP_LED_0, 
-                                        BSP_LED_1, 
-                                        BSP_LED_2, 
-                                        BSP_LED_3, 
-                                        BSP_LED_4, 
-                                        BSP_LED_5, 
-                                        BSP_LED_6, 
-                                        BSP_LED_7};
+    uint8_t Led_Counter;
+    
+    uint8_t Leds_Address[8] =    {BSP_LED_0, 
+                                    BSP_LED_1, 
+                                    BSP_LED_2, 
+                                    BSP_LED_3, 
+                                    BSP_LED_4, 
+                                    BSP_LED_5, 
+                                    BSP_LED_6, 
+                                    BSP_LED_7};
 
     /* Check the application's current state. */
     switch ( appData.state )

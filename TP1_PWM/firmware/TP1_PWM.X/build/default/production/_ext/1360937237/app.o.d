@@ -1,5 +1,4 @@
-build/default/debug/_ext/1688732426/system_tasks.o: \
- ../src/system_config/default/system_tasks.c \
+build/default/production/_ext/1360937237/app.o: ../src/app.c ../src/app.h \
  ../src/system_config/default/system_config.h \
  ../../../../../../../bsp/pic32mx_skes/bsp.h \
  ../../../../../../../framework/peripheral/ports/plib_ports.h \
@@ -57,7 +56,6 @@ build/default/debug/_ext/1688732426/system_tasks.o: \
  ../../../../../../../framework/system/common/sys_common.h \
  ../../../../../../../framework/system/common/sys_module.h \
  ../../../../../../../framework/driver/oc/drv_oc.h \
- ../src/system_config/default/system_config.h \
  ../../../../../../../framework/driver/driver_common.h \
  ../src/system_config/default/framework/driver/oc/drv_oc_static.h \
  ../../../../../../../framework/system/devcon/sys_devcon.h \
@@ -146,7 +144,10 @@ build/default/debug/_ext/1688732426/system_tasks.o: \
  ../../../../../../../framework/driver/tmr/drv_tmr_compatibility.h \
  ../../../../../../../framework/system/ports/sys_ports.h \
  ../../../../../../../framework/system/ports/sys_ports_definitions.h \
- ../src/app.h ../src/system_config/default/system_definitions.h
+ ../src/app.h ../../../../../../../bsp/pic32mx_skes/Mc32DriverAdc.h \
+ ../../../../../../../bsp/pic32mx_skes/Mc32DriverLcd.h ../src/GestPWM.h
+
+../src/app.h:
 
 ../src/system_config/default/system_config.h:
 
@@ -261,8 +262,6 @@ build/default/debug/_ext/1688732426/system_tasks.o: \
 ../../../../../../../framework/system/common/sys_module.h:
 
 ../../../../../../../framework/driver/oc/drv_oc.h:
-
-../src/system_config/default/system_config.h:
 
 ../../../../../../../framework/driver/driver_common.h:
 
@@ -442,4 +441,8 @@ build/default/debug/_ext/1688732426/system_tasks.o: \
 
 ../src/app.h:
 
-../src/system_config/default/system_definitions.h:
+../../../../../../../bsp/pic32mx_skes/Mc32DriverAdc.h:
+
+../../../../../../../bsp/pic32mx_skes/Mc32DriverLcd.h:
+
+../src/GestPWM.h:
