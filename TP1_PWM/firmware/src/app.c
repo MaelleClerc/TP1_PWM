@@ -152,8 +152,6 @@ void APP_Tasks ( void )
         /* Application's initial state. */
         case APP_STATE_INIT:
         {
-            bool appInitialized = true;
-            
             // Initialisation du LCD
             lcd_init();
             
@@ -173,13 +171,9 @@ void APP_Tasks ( void )
             {
                 BSP_LEDOff(Leds_Address[Led_Counter]); 
             }
-       
-        
-            if (appInitialized)
-            {
             
-                appData.state = APP_STATE_WAIT;
-            }
+            appData.state = APP_STATE_WAIT;
+            
             break;
         }
 
