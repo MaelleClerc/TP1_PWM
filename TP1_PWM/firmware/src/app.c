@@ -150,7 +150,6 @@ void APP_Tasks ( void )
     {
         /* Application's initial state. */
         case APP_STATE_INIT:
-<<<<<<< HEAD
         {
             bool appInitialized = true;
             
