@@ -155,6 +155,8 @@ void APP_Tasks ( void )
             // Initialisation du LCD
             lcd_init();
             
+            GPWM_Initialize();
+            
             // Affichage sur le LCD des lignes de base
             printf_lcd("Tp1 PWM 2022-2023");
             lcd_gotoxy(1, 2);
@@ -179,17 +181,15 @@ void APP_Tasks ( void )
 
         case APP_STATE_SERVICE_TASKS:
         {
-            appData.state = APP_STATE_WAIT;
+            appData.state = APP_STATE_WAIT;     
             
             break;
         }
 
         case APP_STATE_WAIT:
-        {
-        
+        {        
             break;
-        }
-        
+        }        
 
         /* The default state should never be executed. */
         default:

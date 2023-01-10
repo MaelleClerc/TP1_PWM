@@ -24,7 +24,7 @@
 
 S_pwmSettings PWMData;      // pour les settings
 
-void GPWM_Initialize(S_pwmSettings *pData)
+void GPWM_Initialize()
 {
    // Init les data 
     
@@ -42,15 +42,18 @@ void GPWM_Initialize(S_pwmSettings *pData)
 }
 
 // Obtention vitesse et angle (mise a jour des 4 champs de la structure)
-void GPWM_GetSettings(S_pwmSettings *pData)	
+void GPWM_GetSettings()	
 {
     /* Variables locales */
-    static uint8_t Moving_Average_Memory = 0;    
-    static uint8_t Moving_Average_Chan0[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-    static uint8_t Moving_Average_Chan1[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    static uint8_t Moving_Average_Memory = 0;
     uint8_t i;
-    uint8_t Average_Chan0 = 0;
-    uint8_t Average_Chan1 = 0;
+    
+    static uint16_t Moving_Average_Chan0[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    static uint16_t Moving_Average_Chan1[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    
+    float Average_Chan0 = 0;
+    float Average_Chan1 = 0;
+    
     S_ADCResults Results;
     
     // Lecture de l'ADC
@@ -78,16 +81,17 @@ void GPWM_GetSettings(S_pwmSettings *pData)
     Average_Chan1 = Average_Chan1 / 10;
     
     // Conversion des valeurs
-    PWMData.SpeedSetting = (Average_Chan0 / 5.166) - 99;    // 5.166 = 1023 / 198
+    PWMData.SpeedSetting = (Average_Chan0 * 198 / 1023) - 99;    // 5.166 = 1023 / 198
     PWMData.absSpeed = abs(PWMData.SpeedSetting);
-    PWMData.absAngle = Average_Chan1 / 5.683;               // 5.683 = 1023 / 180
+    PWMData.absAngle = Average_Chan1 * 180 / 1023;               // 5.683 = 1023 / 180
     PWMData.AngleSetting = PWMData.absAngle - 90;
 }
 
 
 // Affichage des information en exploitant la structure
-void GPWM_DispSettings(S_pwmSettings *pData)
+void GPWM_DispSettings()
 {
+    lcd_gotoxy(1, 1);
     printf_lcd("Tp1 PWM 2022-2023");
     lcd_gotoxy(1, 2);
     printf_lcd("SpeedSetting %3d", PWMData.SpeedSetting);
@@ -98,7 +102,7 @@ void GPWM_DispSettings(S_pwmSettings *pData)
 }
 
 // Execution PWM et gestion moteur à partir des info dans structure
-void GPWM_ExecPWM(S_pwmSettings *pData)
+void GPWM_ExecPWM()
 {
     // Gestion du sens de direction du pont en H
     if(PWMData.SpeedSetting > 0)
@@ -119,14 +123,14 @@ void GPWM_ExecPWM(S_pwmSettings *pData)
     }
     
     // Calcul du nombre d'impulsions sur OC2
-    PLIB_OC_PulseWidth16BitSet(OC_ID_2, PWMData.absSpeed * 20.19);          // 20.19 = 1999 / 99
+    PLIB_OC_PulseWidth16BitSet(OC_ID_2, PWMData.absSpeed * 1999 / 99);          // 20.19 = 1999 / 99
     
     // Calcul du nombre d'impulsions sur OC3
-    PLIB_OC_PulseWidth16BitSet(OC_ID_3, PWMData.absAngle * 58.33 + 2999);   // 58.33 = (13499 - 2999) / 180
+    PLIB_OC_PulseWidth16BitSet(OC_ID_3, PWMData.absAngle * 9000 / 180 + 2999);   // 58.33 = (13499 - 2999) / 180
 }
 
 // Execution PWM software
-void GPWM_ExecPWMSoft(S_pwmSettings *pData)
+void GPWM_ExecPWMSoft()
 { 
     static uint8_t PWM_Counter = 0;
     static uint8_t PWM_Compare = 0;
@@ -135,17 +139,23 @@ void GPWM_ExecPWMSoft(S_pwmSettings *pData)
     {
         PWM_Compare = PWMData.absSpeed;
     }
-    else if (PWM_Counter < PWM_Compare)
+    
+    
+    if (PWM_Counter < PWM_Compare)
     {
         BSP_LEDOn(BSP_LED_2);
-    }
-    else if (PWM_Counter >= 99)
-    {
-        PWM_Counter = 0;
     }
     else
     {
         BSP_LEDOff(BSP_LED_2);
+    }
+
+    
+    PWM_Counter ++;
+    
+    if (PWM_Counter > 99)
+    {
+        PWM_Counter = 0;
     }
 }
 
